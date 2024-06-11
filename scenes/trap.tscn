@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqoxa8qka2ra5"]
+
+[ext_resource type="Texture2D" uid="uid://2c0id22pf5ji" path="res://traps/trap1.png" id="1_2tc53"]
+[ext_resource type="Script" path="res://scripts/trap.gd" id="1_60l4j"]
+[ext_resource type="PackedScene" uid="uid://ct1d2vj0q3ugw" path="res://scenes/killzone.tscn" id="2_s58mg"]
+
+[node name="Trap" type="Node2D"]
+scale = Vector2(0.055, 0.055)
+script = ExtResource("1_60l4j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -709.091)
+texture = ExtResource("1_2tc53")
+offset = Vector2(0, 709.091)
+
+[node name="Killzone" parent="Sprite2D" instance=ExtResource("2_s58mg")]
+position = Vector2(0, 709.091)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite2D/Killzone"]
+polygon = PackedVector2Array(-69, 449, -206, 517, -492, 490, -643, 399, -712, 335, -663, 441, -564, 565, -431, 675, -300, 750, -122, 802, 35, 814, 221, 789, 415, 695, 591, 543, 723, 343, 561, 456, 376, 535, 240, 530, 65, 432)
