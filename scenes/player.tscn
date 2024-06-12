@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://crv1wbevb7im1"]
+[gd_scene load_steps=45 format=3 uid="uid://crv1wbevb7im1"]
 
 [ext_resource type="Texture2D" uid="uid://bt388ve5q7l4q" path="res://character/Idle.png" id="1_f5r4a"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_rpphm"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cx0o5jltd3utr" path="res://character/Dead.png" id="3_qsn05"]
 [ext_resource type="Texture2D" uid="uid://cxo48eqoseft0" path="res://character/Walk.png" id="4_r265s"]
 [ext_resource type="Texture2D" uid="uid://dyhymkghn6hdv" path="res://flashlight/flashlight2.jpg" id="6_blxdc"]
+[ext_resource type="Texture2D" uid="uid://lldiccde0ofe" path="res://character/Idle_2.png" id="7_m2u0u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_22t10"]
 atlas = ExtResource("3_cglra")
@@ -88,6 +89,26 @@ region = Rect2(1152, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_d1w31"]
 atlas = ExtResource("3_emlvs")
 region = Rect2(1280, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s54pw"]
+atlas = ExtResource("7_m2u0u")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2sue"]
+atlas = ExtResource("7_m2u0u")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a46gw"]
+atlas = ExtResource("7_m2u0u")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tghe"]
+atlas = ExtResource("7_m2u0u")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh47i"]
+atlas = ExtResource("7_m2u0u")
+region = Rect2(1024, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kawhv"]
 atlas = ExtResource("4_r265s")
@@ -205,6 +226,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_s54pw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2sue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a46gw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tghe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh47i")
+}],
+"loop": false,
+"name": &"Start_anim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_kawhv")
 }, {
 "duration": 1.0,
@@ -252,8 +293,7 @@ texture = ExtResource("2_54ro3")
 modulate = Color(0.82606, 0.82606, 0.82606, 1)
 position = Vector2(0, -64)
 sprite_frames = SubResource("SpriteFrames_tgndl")
-animation = &"Crouch"
-autoplay = "Idle"
+animation = &"Start_anim"
 
 [node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D"]
 position = Vector2(135, 33)
@@ -267,9 +307,13 @@ texture_scale = 0.66
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, -32)
-scale = Vector2(1, 1.035)
 shape = SubResource("CapsuleShape2D_i0fvn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
 
 [connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

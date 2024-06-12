@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 const SPEED = 30.0
 const JUMP_VELOCITY = -300.0
-const JUMP_SPEED = 60
+const JUMP_SPEED = 75.0
 const POINT_LIGHT_POSITION_X = 135.0
 const POINT_LIGHT_POSITION_Y = 33.0
 
@@ -12,6 +12,7 @@ var is_dead = false
 var is_in_crouch = false
 var is_flashlight_enabled = false
 var direction = 0
+var is_start = true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -19,10 +20,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var point_light = $AnimatedSprite2D/PointLight2D
 @onready var collision_shape = $CollisionShape2D
+@onready var timer = $Timer
+
+func _ready():
+	timer.start()
 
 func _physics_process(delta):
 	
-	if not is_dead:
+	if not is_dead and not is_start:
 		
 		# Gravity
 		if not is_on_floor():
@@ -92,8 +97,10 @@ func _physics_process(delta):
 				# direction of movement according to the character's rotation
 				if animated_sprite.flip_h:
 					velocity.x = -JUMP_SPEED
+					velocity.y = 0
 				else:
 					velocity.x = JUMP_SPEED
+					velocity.y = 0
 				move_and_slide()
 				
 			else:
@@ -120,7 +127,15 @@ func _on_animated_sprite_2d_animation_finished():
 		print("animation finished...")
 		
 
+func _on_timer_timeout():
+	animated_sprite.play("Start_anim")
+
 func _on_animated_sprite_2d_frame_changed():
+	if animated_sprite.animation == "Start_anim":
+		
+		if animated_sprite.frame == 4:
+			is_start = false
+	
 	if animated_sprite.animation == "Idle":
 		
 		if animated_sprite.frame == 2:

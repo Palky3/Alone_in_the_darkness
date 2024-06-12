@@ -111,7 +111,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x07fj"]
 radius = 8.0
-height = 62.0
+height = 63.3913
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1h4fe"]
 radius = 8.69565
@@ -125,11 +125,11 @@ script = ExtResource("1_vnxop")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xlw4a")
-animation = &"Dead"
+animation = &"Walk"
 autoplay = "Walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(7, 17)
+position = Vector2(6.95652, 15.6522)
 shape = SubResource("CapsuleShape2D_x07fj")
 
 [node name="Killzone" parent="." instance=ExtResource("2_ik2y1")]
