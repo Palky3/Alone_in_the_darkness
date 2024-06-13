@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://7vcfgn1v1y2v"]
+
+[ext_resource type="Script" path="res://scripts/trap_2.gd" id="1_a57nk"]
+[ext_resource type="Texture2D" uid="uid://b2dgkgub36j65" path="res://traps/trap2.png" id="1_wdv7l"]
+[ext_resource type="PackedScene" uid="uid://ct1d2vj0q3ugw" path="res://scenes/killzone.tscn" id="2_imkgb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1d3w2"]
+radius = 473.077
+
+[node name="Trap2" type="Node2D"]
+z_index = 1
+scale = Vector2(0.035, 0.035)
+script = ExtResource("1_a57nk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wdv7l")
+offset = Vector2(15.525, 5.96)
+
+[node name="Killzone" parent="Sprite2D" instance=ExtResource("2_imkgb")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Killzone"]
+position = Vector2(-0.185, -2.968)
+scale = Vector2(1.01, 1.01)
+shape = SubResource("CircleShape2D_1d3w2")

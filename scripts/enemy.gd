@@ -23,6 +23,10 @@ func _physics_process(delta):
 		if direction:
 			velocity.x = direction * SPEED
 			animated_sprite.play("Walk")
+			if direction == -1:
+				animated_sprite.flip_h = true
+				collision_shape.position.x = -7
+				killzone_collision_shape.position.x = -8.7
 
 		move_and_slide()
 	

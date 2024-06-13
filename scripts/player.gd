@@ -13,6 +13,7 @@ var is_in_crouch = false
 var is_flashlight_enabled = false
 var direction = 0
 var is_start = true
+var checkpoint_pos = Vector2(-235, 48)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -21,13 +22,16 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var point_light = $AnimatedSprite2D/PointLight2D
 @onready var collision_shape = $CollisionShape2D
 @onready var timer = $Timer
+@onready var game = $".."
 
 func _ready():
-	timer.start()
+	if is_start:
+		timer.start()
+	position = checkpoint_pos
 
 func _physics_process(delta):
 	
-	if not is_dead and not is_start:
+	if not is_dead and not is_start and not game.is_paused and not game.is_finished:
 		
 		# Gravity
 		if not is_on_floor():
@@ -44,13 +48,17 @@ func _physics_process(delta):
 			# Flip the Sprite
 			if direction > 0:
 				animated_sprite.flip_h = false
+				animated_sprite.position.x = 0
 				point_light.position.x = abs(point_light.position.x)
-				point_light.rotation = 0 
+				point_light.rotation = 0
+				collision_shape.position.x = -abs(collision_shape.position.x)
 				
 			elif direction < 0:
 				animated_sprite.flip_h = true
+				animated_sprite.position.x = -8
 				point_light.position.x = -abs(point_light.position.x)
 				point_light.rotation = PI
+				collision_shape.position.x = abs(collision_shape.position.x) -8
 			
 			# Play animations
 			if direction == 0:
@@ -78,7 +86,7 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("turn_flashlight"):
 				is_flashlight_enabled = not is_flashlight_enabled
 				point_light.enabled = not point_light.enabled
-				
+			
 			# Apply movement
 			if direction:
 				velocity.x = direction * SPEED
@@ -115,6 +123,18 @@ func die():
 	animated_sprite.play("Dead")
 	call_deferred("disable_collision_and_light")
 	
+func reset(pos):
+	is_jumping = false
+	is_dead = false
+	is_in_crouch = false
+	is_flashlight_enabled = false
+	direction = 0
+	is_start = false
+	position = pos
+	collision_shape.position = Vector2(-4, -32)
+	await get_tree().create_timer(0.01).timeout
+	collision_shape.disabled = false
+
 func disable_collision_and_light():
 	collision_shape.disabled = true
 	point_light.enabled = false
@@ -122,6 +142,9 @@ func disable_collision_and_light():
 func _on_animated_sprite_2d_animation_finished():
 	if animated_sprite.animation == "Jump":
 		is_jumping = false
+		collision_shape.position.y = -32
+		collision_shape.position.x = -4
+		
 		if is_flashlight_enabled:
 			point_light.enabled = true
 		print("animation finished...")
@@ -143,6 +166,38 @@ func _on_animated_sprite_2d_frame_changed():
 			
 		if animated_sprite.frame == 3:
 			point_light.position.y += 1
+			
+	if animated_sprite.animation == "Jump":
+		
+		if animated_sprite.frame == 3:
+			collision_shape.position.y = -44
+			
+		if animated_sprite.frame == 4:
+			collision_shape.position.y = -52
+			
+		if animated_sprite.frame == 5:
+			collision_shape.position.y = -63
+			if animated_sprite.flip_h:
+				collision_shape.position.x = -5
+			else:
+				collision_shape.position.x = 0
+				
+		if animated_sprite.frame == 7:
+			collision_shape.position.y = -52
+			if animated_sprite.flip_h:
+				collision_shape.position.x = -8
+			else:
+				collision_shape.position.x = 1
+			
+		if animated_sprite.frame == 8:
+			collision_shape.position.y = -40
+			if animated_sprite.flip_h:
+				collision_shape.position.x = -15
+			else:
+				collision_shape.position.x = 9
+			
+		if animated_sprite.frame == 9:
+			collision_shape.position.y = -32
 	
 	if animated_sprite.animation == "Walk":
 		

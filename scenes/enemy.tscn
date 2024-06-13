@@ -110,11 +110,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x07fj"]
-radius = 8.0
+radius = 6.95652
 height = 63.3913
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1h4fe"]
-radius = 8.69565
+radius = 10.4348
 height = 62.6087
 
 [node name="Enemy" type="CharacterBody2D"]
@@ -137,5 +137,5 @@ position = Vector2(1.73913, 0)
 collision_mask = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
-position = Vector2(6.95652, 15.6522)
+position = Vector2(5.21739, 15.6522)
 shape = SubResource("CapsuleShape2D_1h4fe")

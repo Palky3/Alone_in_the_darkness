@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxek6enlv5w2g"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_t7k5h"]
+
+[node name="Checkpoint" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.245, 10.295)
+shape = SubResource("SegmentShape2D_t7k5h")
