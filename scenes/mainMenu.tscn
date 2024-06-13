@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtnbodkpk2u2r"]
+[gd_scene load_steps=5 format=3 uid="uid://dtnbodkpk2u2r"]
 
 [ext_resource type="Theme" uid="uid://d11kee818xmkm" path="res://themes/default_theme.tres" id="1_edlb3"]
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_fwlfl"]
 [ext_resource type="Texture2D" uid="uid://spkinw0wpvri" path="res://backgrounds/menu_background2.png" id="3_ia4gc"]
+[ext_resource type="AudioStream" uid="uid://chd54ibi0uw" path="res://sounds/main_menu_song.mp3" id="4_djdr8"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -90,6 +91,11 @@ focus_neighbor_top = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../PlayButton")
 theme_override_font_sizes/font_size = 42
 text = "Konec"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_djdr8")
+volume_db = -17.129
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsBox/PlayButton" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsBox/OptionsButton" to="." method="_on_options_pressed"]

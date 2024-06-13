@@ -20,6 +20,7 @@ func _on_body_entered(body):
 		
 	if body.name.find("Enemy") >= 0:
 		body.enemy_die()
+		body.get_node("AudioStreamPlayer2D")
 
 func _on_timer_timeout():
 	player.reset(player.checkpoint_pos)

@@ -13,7 +13,7 @@ var is_in_crouch = false
 var is_flashlight_enabled = false
 var direction = 0
 var is_start = true
-var checkpoint_pos = Vector2(-235, 48)
+var checkpoint_pos = Vector2(987, 48) #-235
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -23,6 +23,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var collision_shape = $CollisionShape2D
 @onready var timer = $Timer
 @onready var game = $".."
+@onready var audio_stream_player_2d = $AudioStreamPlayer2D
+@onready var footsteps = $Footsteps
 
 func _ready():
 	if is_start:
@@ -84,6 +86,7 @@ func _physics_process(delta):
 				is_in_crouch = false
 				
 			if Input.is_action_just_pressed("turn_flashlight"):
+				audio_stream_player_2d.play()
 				is_flashlight_enabled = not is_flashlight_enabled
 				point_light.enabled = not point_light.enabled
 			
@@ -197,6 +200,8 @@ func _on_animated_sprite_2d_frame_changed():
 				collision_shape.position.x = 9
 			
 		if animated_sprite.frame == 9:
+			footsteps.pitch_scale = 1.37
+			footsteps.play()
 			collision_shape.position.y = -32
 	
 	if animated_sprite.animation == "Walk":
@@ -209,6 +214,8 @@ func _on_animated_sprite_2d_frame_changed():
 				point_light.position.x = POINT_LIGHT_POSITION_X - 2
 		
 		if animated_sprite.frame == 1:
+			footsteps.pitch_scale = randf_range(0.8, 1.2)
+			footsteps.play()
 			if animated_sprite.flip_h:
 				point_light.position.x -= 1
 			else:
@@ -216,6 +223,7 @@ func _on_animated_sprite_2d_frame_changed():
 				
 		if animated_sprite.frame == 2:
 			point_light.position.y += 2
+			
 				
 		if animated_sprite.frame == 4:
 			point_light.position.y -= 2
@@ -224,6 +232,10 @@ func _on_animated_sprite_2d_frame_changed():
 			else:
 				point_light.position.x -= 1
 				
+		if animated_sprite.frame == 5:
+			footsteps.pitch_scale = randf_range(0.8, 1.2)
+			footsteps.play()
+		
 		if animated_sprite.frame == 6:
 			point_light.position.y += 1
 			if animated_sprite.flip_h:

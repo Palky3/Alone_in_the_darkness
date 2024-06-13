@@ -10,6 +10,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var collision_shape = $CollisionShape2D
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var killzone_collision_shape = $Killzone/CollisionShape2D
+@onready var audio_stream_player_2d = $AudioStreamPlayer2D
 
 func _physics_process(delta):
 	
@@ -33,6 +34,7 @@ func _physics_process(delta):
 func enemy_die():
 	is_dead = true
 	animated_sprite.play("Dead")
+	audio_stream_player_2d.stop()
 	call_deferred("disable_collisions")
 	
 func disable_collisions():

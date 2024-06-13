@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://bsbjo51af2vve"]
+[gd_scene load_steps=22 format=3 uid="uid://bsbjo51af2vve"]
 
 [ext_resource type="Texture2D" uid="uid://bjvaynmu6g5ks" path="res://enemies/Zombie Man/Walk.png" id="1_tp2u7"]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_vnxop"]
 [ext_resource type="Texture2D" uid="uid://d2hx6u3wck1h5" path="res://enemies/Zombie Man/Dead.png" id="2_d6rl6"]
 [ext_resource type="PackedScene" uid="uid://ct1d2vj0q3ugw" path="res://scenes/killzone.tscn" id="2_ik2y1"]
+[ext_resource type="AudioStream" uid="uid://cy1dybb1ri60" path="res://sounds/zombie_sound.mp3" id="5_ifdri"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w72it"]
 atlas = ExtResource("2_d6rl6")
@@ -139,3 +140,9 @@ collision_mask = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 position = Vector2(5.21739, 15.6522)
 shape = SubResource("CapsuleShape2D_1h4fe")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ifdri")
+volume_db = -4.895
+autoplay = true
+max_distance = 100.0
