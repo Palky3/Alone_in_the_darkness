@@ -13,7 +13,7 @@ var is_in_crouch = false
 var is_flashlight_enabled = false
 var direction = 0
 var is_start = true
-var checkpoint_pos = Vector2(987, 48) #-235
+var checkpoint_pos = Vector2(-235, 48)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
